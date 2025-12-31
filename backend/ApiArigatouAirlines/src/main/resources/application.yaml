@@ -1,7 +1,7 @@
 spring:
   datasource:
     # Đã điền cứng Host nội bộ Railway + Database name là "railway"
-    url: jdbc:mysql://mysql.railway.internal:3306/railway
+    url: jdbc:mysql://root:ktCgZWKevltxPMslrhvMkujgkwSzldgv@mysql.railway.internal:3306/railway
     username: root
     # Password lấy từ hình ảnh bạn gửi
     password: ktCgZWKeVltxPMSlrhvMkujgkwSzldgv
