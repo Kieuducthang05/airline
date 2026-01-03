@@ -156,7 +156,7 @@ export default function MethodBankTransfer({ amount, bookingCode, bookingId,vouc
             <p>2. Chọn chuyển khoản nhanh 24/7 tới số tài khoản trên.</p>
             <p>3. Nhập đúng số tiền: <strong>{formatCurrency(amount)}</strong>.</p>
             <p>4. Nhập nội dung: <strong>{bankInfo.content}</strong>.</p>
-            <p>5. Sau khi chuyển xong, quay lại đây và bấm nút "Tôi đã chuyển khoản".</p>
+            <p>5. Sau khi chuyển xong, quay lại đây và bấm nút &quot;Tôi đã chuyển khoản&quot;.</p>
           </div>
         )}
       </div>
