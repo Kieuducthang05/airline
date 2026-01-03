@@ -16,15 +16,17 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class TicketResponse {
 
+    int ticketId;
+
     BookingResponse booking;
 
-    FlightResponse flight;
+    FlightResponse  flight;
 
     PassengerResponse passenger;
 
     FlightPriceResponse flightPrice;
 
-    FlightSeat flightSeat;
+    int flightSeatId;
 
     String ticketNumber;
 

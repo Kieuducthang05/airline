@@ -49,7 +49,6 @@ public class BookingController {
                 .body(bookingService.getBooking(id))
                 .build();
     }
-
     @PutMapping("/{id}/confirm-payment")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     ApiResponse<BookingResponse> confirmPayment(@PathVariable int id, @RequestBody(required = false) PaymentRequest paymentRequest) {

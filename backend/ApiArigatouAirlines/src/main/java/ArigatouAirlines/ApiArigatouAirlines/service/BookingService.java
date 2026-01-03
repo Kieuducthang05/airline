@@ -125,7 +125,7 @@ public class BookingService {
         Booking booking = new Booking();
         booking.setUser(user);
         booking.setStatusBooking(StatusBooking.Pending);
-        booking.setStatusPayment(StatusPayment.Pending);
+        booking.setStatusPayment(StatusPaymentBooking.Pending);
 
         List<Passenger> listPassenger = bookingRequest.getListPassengerRequest().stream()
                 .map(passengerMapper :: toPassenger).toList();
@@ -293,7 +293,6 @@ public class BookingService {
 
         return bookingMapper.toBookingResponse(booking);
     }
-
     @Transactional
     public BookingResponse confirmPayment(int id, PaymentRequest paymentRequest) {
         // Get current user
@@ -301,22 +300,22 @@ public class BookingService {
         String username = context.getAuthentication().getName();
         User currentUser = userRepository.findByUsernameAndIsActiveTrue(username)
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTS));
-        
+
         Booking booking = bookingRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.BOOKING_NOT_FOUND));
-        
+
         // Check if user owns this booking (skip for admin)
         boolean isAdmin = context.getAuthentication().getAuthorities().stream()
                 .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
         if (!isAdmin && booking.getUser().getUserId() != currentUser.getUserId()) {
             throw new AppException(ErrorCode.UNAUTHORIZED);
         }
-        
+
         if (booking.getStatusBooking() == StatusBooking.Cancelled) {
             throw new AppException(ErrorCode.BOOKING_ALREADY_CANCELLED);
         }
 
-        if (booking.getStatusPayment() == StatusPayment.Paid) {
+        if (booking.getStatusPayment() == StatusPaymentBooking.Paid) {
             if (booking.getStatusBooking() != StatusBooking.Confirmed) {
                 booking.setStatusBooking(StatusBooking.Confirmed);
                 bookingRepository.save(booking);
@@ -354,22 +353,22 @@ public class BookingService {
                 }
             }
         }
-        
+
         booking.setStatusBooking(StatusBooking.Confirmed);
-        booking.setStatusPayment(StatusPayment.Paid);
+        booking.setStatusPayment(StatusPaymentBooking.Paid);
         bookingRepository.save(booking);
-        
+
         return bookingMapper.toBookingResponse(booking);
     }
 
     public BookingResponse cancelBooking(int id) {
         Booking booking = bookingRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.BOOKING_NOT_FOUND));
-        
+
         if (booking.getStatusBooking() == StatusBooking.Cancelled) {
             throw new AppException(ErrorCode.BOOKING_ALREADY_CANCELLED);
         }
-        
+
         // Release all seats associated with this booking
         List<Ticket> tickets = ticketRepository.findAllByBooking_BookingId(booking.getBookingId());
         for (Ticket ticket : tickets) {
@@ -379,15 +378,15 @@ public class BookingService {
                 flightSeatRepository.save(seat);
             }
         }
-        
+
         booking.setStatusBooking(StatusBooking.Cancelled);
-        if (booking.getStatusPayment() == StatusPayment.Paid) {
-            booking.setStatusPayment(StatusPayment.Refunded);
+        if (booking.getStatusPayment() == StatusPaymentBooking.Paid) {
+            booking.setStatusPayment(StatusPaymentBooking.Refunded);
         } else {
-            booking.setStatusPayment(StatusPayment.Failed);
+            booking.setStatusPayment(StatusPaymentBooking.Failed);
         }
         bookingRepository.save(booking);
-        
+
         return bookingMapper.toBookingResponse(booking);
     }
 }

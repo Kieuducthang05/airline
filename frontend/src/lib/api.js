@@ -1,7 +1,7 @@
 const RAW_API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export const normalizeApiBaseUrl = (baseUrl) => {
-  const trimmed = String(baseUrl || "http://localhost:8080").replace(/\/+$/, "");
+  const trimmed = String(baseUrl || "https://airline-krtf.onrender.com").replace(/\/+$/, "");
   if (trimmed.endsWith("/arigatouAirlines")) return trimmed;
   return `${trimmed}/arigatouAirlines`;
 };

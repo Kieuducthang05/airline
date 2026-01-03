@@ -15,14 +15,20 @@ import java.util.Set;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserUpdateRequest {
-    @Size(min = 8, message = "INVALID_PASSWORD")
-    String password;
-    String fullName;
-    LocalDate dateOfBirth;
-    Gender gender;
-    String phone;
     @Email(message = "INVALID_EMAIL")
     String email;
-    String avatar;
+
+    @Size(min = 8, message = "INVALID_PASSWORD")
+    String password;
+
+    String fullName;
+
+    // String phone;
+
+    LocalDate dateOfBirth;
+
+    Gender gender;
+
+    String avatar = "default avatar";
     Set<String> roles;
 }

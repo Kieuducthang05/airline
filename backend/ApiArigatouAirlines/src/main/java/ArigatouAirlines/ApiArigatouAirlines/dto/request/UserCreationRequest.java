@@ -22,7 +22,8 @@ public class UserCreationRequest {
     @UniqueEmail(message = "EMAIL_EXISTED")
     String email;
 
-    @Size(min = 6, max = 20, message = "INVALID_USERNAME")
+    @Size(min = 6, message = "INVALID_USERNAME_MIN")
+    @Size(max = 20, message = "INVALID_USERNAME_MAX")
     @NotNull(message = "USERNAME_IS_NULL")
     String username;
 
@@ -33,8 +34,8 @@ public class UserCreationRequest {
     @NotNull(message = "FULLNAME_IS_NULL")
     String fullName;
 
-    @NotNull(message = "PHONE_NULL")
-    String phone;
+    // @NotNull(message = "PHONE_NULL")
+    // String phone;
 
     @NotNull(message = "DOB_IS_NULL")
     LocalDate dateOfBirth;

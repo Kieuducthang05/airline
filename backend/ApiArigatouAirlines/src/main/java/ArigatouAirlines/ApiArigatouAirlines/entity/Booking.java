@@ -4,6 +4,7 @@ import ArigatouAirlines.ApiArigatouAirlines.converter.StatusBookingConverter;
 import ArigatouAirlines.ApiArigatouAirlines.converter.StatusPaymentConverter;
 import ArigatouAirlines.ApiArigatouAirlines.enums.StatusBooking;
 import ArigatouAirlines.ApiArigatouAirlines.enums.StatusPayment;
+import ArigatouAirlines.ApiArigatouAirlines.enums.StatusPaymentBooking;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -13,7 +14,8 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Entity(name = "booking")
+@Entity
+@Table(name = "booking")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -34,12 +36,12 @@ public class Booking {
     String bookingCode;
 
     @Column(name = "booking_status")
-    @Convert(converter = StatusBookingConverter.class)
+    @Enumerated(EnumType.STRING)
     StatusBooking statusBooking;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "payment_status")
-    @Convert(converter = StatusPaymentConverter.class)
-    StatusPayment statusPayment;
+    StatusPaymentBooking statusPayment;
 
     @Column(name = "total_amount", precision = 10, scale = 2)
     BigDecimal totalAmount;
@@ -48,15 +50,15 @@ public class Booking {
     LocalDateTime paymentDeadline;
 
     @Column(name = "created_at")
-    Instant createdAt;
+    LocalDateTime createdAt;
 
     @PrePersist
     void prePersist() {
         if (bookingCode == null || bookingCode.isBlank()) {
-            bookingCode = UUID.randomUUID().toString();
+            bookingCode = UUID.randomUUID().toString().substring(0, 20);
         }
         if (createdAt == null) {
-            createdAt = Instant.now();
+            createdAt = LocalDateTime.now();
         }
     }
 }

@@ -32,14 +32,10 @@ public class User {
     @Column(name = "full_name")
     String fullName;
 
-    String phone;
+    // String phone;
 
     @Column(name = "date_of_birth")
     LocalDate dateOfBirth;
-
-    @Column(name = "is_active")
-    @Builder.Default
-    boolean isActive = true;
 
     @Enumerated(EnumType.STRING)
     Gender gender;
@@ -53,4 +49,7 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_name")
     )
     Set<Role> roles;
+
+    @Column(name = "is_active")
+    boolean isActive;
 }

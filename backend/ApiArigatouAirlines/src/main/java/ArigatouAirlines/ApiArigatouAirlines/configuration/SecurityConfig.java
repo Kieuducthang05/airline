@@ -33,7 +33,8 @@ public class SecurityConfig {
             "/auth/forget-password",
             "/auth/reset-password/**",
             "/airline",
-            "/chatbot/ask"
+            "/chatbot/ask",
+            "/chat"
     };
     private final String[] PUBLIC_ENDPOINTS_GET = {
             "/payment/create_payment",  //test
@@ -43,7 +44,7 @@ public class SecurityConfig {
             "/airport",
             "/aircraft",
             "/flightSchedules",
-            "/flights",
+            "/flights/**",
             "/airline"
     };
 
@@ -58,6 +59,7 @@ public class SecurityConfig {
 
         httpSecurity.authorizeHttpRequests(request -> request
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .requestMatchers("/ws/**").permitAll()
                 .requestMatchers(HttpMethod.GET, PUBLIC_ENDPOINTS_GET).permitAll()
                 .requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS).permitAll()
                 .anyRequest().authenticated()
@@ -91,7 +93,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         // origin FE của bạn
-        config.setAllowedOrigins(List.of("https://qairlinesvtd.vercel.app"));
+        config.setAllowedOrigins(List.of("https://qairlinesvtd.vercel.app/"));
         config.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);

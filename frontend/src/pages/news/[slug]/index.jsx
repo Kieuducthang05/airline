@@ -45,6 +45,7 @@ export default function NewsDetailPage() {
 
   return (
     <div className="min-h-screen bg-gray-50/50 pb-20">
+      {/* ... (Phần giao diện bên dưới giữ nguyên như cũ) ... */}
        <div className="relative w-full h-[400px] md:h-[500px]">
         <div className="absolute inset-0">
             <img 
@@ -82,7 +83,8 @@ export default function NewsDetailPage() {
       </div>
 
       <div className="container mx-auto px-4 py-12 flex flex-col lg:flex-row gap-12">
-        <main className="lg:w-2/3">
+        {/* ... (Phần content giữ nguyên) ... */}
+         <main className="lg:w-2/3">
             <div className="flex items-center justify-between mb-8 pb-8 border-b border-gray-200">
                 <div className="flex items-center gap-3">
                     <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-orange-100">
@@ -98,14 +100,13 @@ export default function NewsDetailPage() {
                         <p className="text-sm text-gray-500">{article.authorTitle}</p>
                     </div>
                 </div>
+                {/* ... Social Buttons ... */}
             </div>
 
             <article className="prose prose-lg prose-orange max-w-none text-gray-700 leading-relaxed">
-                {/* ĐÃ SỬA LỖI Ở DÒNG DƯỚI ĐÂY: Thay " bằng &quot; */}
                 <p className="text-xl font-medium text-gray-900 mb-6 font-serif italic border-l-4 border-orange-500 pl-4">
-                    &quot;{article.description}&quot;
+                    "{article.description}"
                 </p>
-                
                 {article.content ? article.content.split('. ').map((sentence, index) => (
                     sentence.trim() && (
                         <p key={index} className="mb-4 text-justify">
@@ -116,7 +117,7 @@ export default function NewsDetailPage() {
             </article>
         </main>
         
-        {/* Sidebar (Nếu bạn có sidebar thì để ở đây, trong code gốc bạn gửi không có nội dung sidebar nên mình để trống như cũ) */}
+        {/* Sidebar giữ nguyên */}
       </div>
     </div>
   );
