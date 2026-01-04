@@ -234,9 +234,6 @@ public class PaymentService {
         }
         if(discountType.equals(DiscountType.Percentage)) {
             amount = amountBooking.multiply(voucher.getDiscountValue().divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP));
-            if(amount.compareTo(maxDiscountAmount) > 0) {
-                amount = maxDiscountAmount;
-            }
         } else {
             amount = voucher.getDiscountValue();
         }
